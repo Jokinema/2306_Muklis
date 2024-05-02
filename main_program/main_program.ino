@@ -6,10 +6,10 @@
 
 #include <LiquidCrystal_I2C.h>
 
-
-
 #define DEBUG 1
 // #define SEND_RANDOM 0
+
+#define DELAY_BUZZER 1000
 
 enum DeviceAddress {
   DEVICE_ADDRESS_TX_1 = 0x01,
@@ -23,7 +23,7 @@ LoRaModule lora;
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 TimerTask tim1(50);
-TimerTask tim2(100);
+TimerTask tim2(100);-
 TimerTask lcdTim(1000);
 
 DigitalOut ledMerah(7);
@@ -31,18 +31,26 @@ DigitalOut ledKuning(6);
 DigitalOut ledHijau(5);
 DigitalOut buzzer(4);
 
+
+
 int data, status = 1, keyFrameAnim = 0;
 
 void setup() {
 
   Serial.begin(115200);
-
   Serial.print("Initialize...");
-  lcd.init();
-  lcd.backlight();
+
+  buzzer.on();
+
+  if (THIS_DEVICE_ADDRESS == DEVICE_ADDRESS_RX) {
+    lcd.init();
+    lcd.backlight();
+  }
 
   if (THIS_DEVICE_ADDRESS != DEVICE_ADDRESS_RX) proximitySetup();
   lora.init(10, 9, 8);
+
+  buzzer.on();  // Aktif LOW -> Buz Mati
 
   Serial.println("Done..");
 }
@@ -52,8 +60,12 @@ void loop() {
   if (tim2.triggered()) {
     if (THIS_DEVICE_ADDRESS != DEVICE_ADDRESS_RX) sendData();
   }
-  if (lcdTim.triggered()) lcdIdleAnimation();
-  
+  if (lcdTim.triggered()) {
+    if (THIS_DEVICE_ADDRESS == DEVICE_ADDRESS_RX) {
+      lcdIdleAnimation();
+    }
+  };
+
   ledMerah.update();
   ledKuning.update();
   ledHijau.update();
@@ -70,6 +82,4 @@ void loop() {
     lora.sendDataAsyncCb(1000, sendDataCallback);
   }
 #endif
-
-  
 }
