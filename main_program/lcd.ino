@@ -25,7 +25,7 @@ void printReceivedData(int address, int data, bool status) {
     lcd.print("TX1");
   }
   if (address == DEVICE_ADDRESS_TX_2) {
-    lcd.setCursor(13, 0);
+    lcd.setCursor(14, 0);
     lcd.print(">>");
     lcd.setCursor(9, 1);
     lcd.print("TX2");
@@ -48,27 +48,27 @@ void lcdIdleAnimation() {
       lcd.setCursor(0, 0);
       lcd.print("    TIDAK ADA   ");
       lcd.setCursor(0, 1);
-      lcd.print(" -   KERETA     ");
+      lcd.print("  -  KERETA     ");
       break;
       
     case 2:
       lcd.setCursor(0, 0);
       lcd.print("    TIDAK ADA   ");
       lcd.setCursor(0, 1);
-      lcd.print(" -=  KERETA     ");
+      lcd.print("  -= KERETA     ");
       break;
     case 3:
       lcd.setCursor(0, 0);
       lcd.print("    TIDAK ADA   ");
       lcd.setCursor(0, 1);
-      lcd.print(" -=  KERETA =   ");
+      lcd.print("  -= KERETA =   ");
       break;
     case 4:
       lcd.setCursor(0, 0);
       lcd.print("    TIDAK ADA   ");
       lcd.setCursor(0, 1);
-      lcd.print(" -=  KERETA =-  ");
-      keyFrameAnim = 0;
+      lcd.print("  -= KERETA =-  ");
+      keyFrameAnim = -1;
       break;
   }
   keyFrameAnim = keyFrameAnim + 1;
