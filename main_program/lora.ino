@@ -39,21 +39,26 @@ void onReceive(String datas) {
     if (addressRecv == DEVICE_ADDRESS_RX) {
       ledHijau.on();
       ledHijau.offDelay(200);
-
-      buzzer.on();
-      buzzer.offDelay(1000);
-
       printReceivedData(addressRecv, dataRecv, statusRecv);
     }
   } else {
     if (addressRecv == DEVICE_ADDRESS_TX_1) {
       ledMerah.on();
       ledMerah.offDelay(200);
+
+      buzzer.off();
+      delay(DELAY_BUZZER);
+      buzzer.on();
       printReceivedData(addressRecv, dataRecv, statusRecv);
     }
     if (addressRecv == DEVICE_ADDRESS_TX_2) {
       ledHijau.on();
       ledHijau.offDelay(200);
+
+      buzzer.off();
+      delay(DELAY_BUZZER);
+      buzzer.on();
+
       printReceivedData(addressRecv, dataRecv, statusRecv);
     }
   }
